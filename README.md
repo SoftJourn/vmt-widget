@@ -10,8 +10,7 @@
       "name": "vmt-widget-example",
       "version": "0.0.1",
       "dependencies": {
-        "vmt-widget": "git@gitlab.softjourn.if.ua:mmaliarchuk/vmt-widget.git"  
-         //"vmt-widget": "https://gitlab.softjourn.if.ua/mmaliarchuk/vmt-widget.git"
+        "vmt-widget": "git@github.com:SoftJourn/vmt-widget.git"
       }
     }
 
@@ -32,9 +31,7 @@
 2.  Install __vmt-widget__ package via [npm]:
     - install dependency:
     ```
-    npm i -save git+ssh://git@gitlab.softjourn.if.ua:mmaliarchuk/vmt-widget.git
-    or
-    npm i -save git+https://gitlab.softjourn.if.ua/mmaliarchuk/vmt-widget.git
+    npm i -save git+ssh://git@github.com:SoftJourn/vmt-widget.git
     ```   
 	- import VMT widget in some of your __*.js__ file:
 	```js
