@@ -66,8 +66,8 @@ export default class VMTContainer {
         iframe.focus();
     }
 
-    getIframeUrl({frontPoint, memberId, eventId, token, venueId, mode, seatslimit}) {
-        return `${frontPoint}?member=${memberId}${eventId ? '&event=' + eventId : ''}&token=${token}&venue=${venueId}${mode ? '&mode=' + mode : ''}${seatslimit ? '&seatslimit=' + seatslimit : ''}`;
+    getIframeUrl({frontPoint, memberId, eventId, token, venueId, mode, seatslimit,hideCloseBtn}) {
+        return `${frontPoint}?member=${memberId}${eventId ? '&event=' + eventId : ''}&token=${token}&venue=${venueId}${mode ? '&mode=' + mode : ''}${seatslimit ? '&seatslimit=' + seatslimit : ''}${hideCloseBtn ? '&hideCloseBtn=' + hideCloseBtn : ''}`;
     }
 
     showSpinner() {

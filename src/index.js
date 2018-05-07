@@ -16,7 +16,9 @@ export default class {
             mode: options && options.mode,
             styles: options.styles,
             token: options.token,
-            seatslimit:options.seatslimit
+            seatslimit:options.seatslimit,
+            hideCloseBtn:options.hideCloseBtn
+
         });
 
         // ----------------------------------------------------------------------------------------------
