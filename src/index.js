@@ -7,9 +7,7 @@ let pmRpcServer = new PmRpcServer();
 export default class {
 
     static launch(options) {
-
-        const token = options.token;
-
+        let token = options.token;
         let vmtContainer = new VMTContainer({
             containerId: options.containerId || constants.CONTAINER_ID,
             memberId: options.memberId,

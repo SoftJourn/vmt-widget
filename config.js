@@ -31,7 +31,7 @@ export const constants = {
         position: absolute;
         top:50%;
         left:50%;
-        /*margin: -30px 0 0 -30px;*/
+        margin: -30px 0 0 -30px;
     }
     .bounceball {
         height: 105px;
