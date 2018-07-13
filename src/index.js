@@ -7,6 +7,9 @@ let pmRpcServer = new PmRpcServer();
 export default class {
 
     static launch(options) {
+
+        const token = options.token;
+
         let vmtContainer = new VMTContainer({
             containerId: options.containerId || constants.CONTAINER_ID,
             memberId: options.memberId,
@@ -15,7 +18,6 @@ export default class {
             frontPoint: options.frontPoint || constants.FRONT_POINT,
             mode: options && options.mode,
             styles: options.styles,
-            token: options.token,
             seatslimit:options.seatslimit,
             hideCloseBtn:options.hideCloseBtn
 
@@ -40,6 +42,10 @@ export default class {
 
         pmRpcServer.method('toggleFullScreen', () => {
             vmtContainer.toggleFullScreen();
+        });
+
+        pmRpcServer.method('getToken', () => {
+            return token;
         });
     }
 
