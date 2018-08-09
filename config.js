@@ -13,8 +13,8 @@ export const constants = {
     styles: {
         DEFAULT_IFRAME_HEIGHT: 500,
         iframe: `width: 100%; height: 100%;`,
-        fullScreen: `position: fixed; padding: 0; margin: 0; width: 100vw;
-            height: 100vh; outline: none; border: none; top: 0;left: 0`,
+        fullScreen: `position: fixed; padding: 0; margin: 0;
+             outline: none; border: none; top: 0;left: 0`,
         spinner: `
                 .vmt-loading {
         position: absolute;

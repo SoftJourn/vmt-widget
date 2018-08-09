@@ -31,6 +31,8 @@ export default class VMTContainer {
         } else {
             this.initialStyles = iframe.style.cssText;
             iframe.style.cssText = constants.styles.fullScreen;
+            iframe.height = window.innerHeight;
+            iframe.width = window.innerWidth;
         }
     }
 
