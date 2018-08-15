@@ -31,7 +31,7 @@ export default class VMTContainer {
         } else {
             this.initialStyles = iframe.style.cssText;
             iframe.style.cssText = constants.styles.fullScreen;
-            iframe.height = window.innerHeight;
+            iframe.height = (window.orientation === 90 || window.orientation === -90) ? "100%" : window.innerHeight;
         }
     }
 
@@ -67,7 +67,7 @@ export default class VMTContainer {
         iframe.focus();
     }
 
-    getIframeUrl({frontPoint, memberId, eventId, venueId, mode, seatslimit,hideCloseBtn}) {
+    getIframeUrl({frontPoint, memberId, eventId, venueId, mode, seatslimit, hideCloseBtn}) {
         return `${frontPoint}?member=${memberId}${eventId ? '&event=' + eventId : ''}&venue=${venueId}${mode ? '&mode=' + mode : ''}${seatslimit ? '&seatslimit=' + seatslimit : ''}${hideCloseBtn ? '&hideCloseBtn=' + hideCloseBtn : ''}`;
     }
 
