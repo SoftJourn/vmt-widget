@@ -1,4 +1,5 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     entry: './src/index.js',
@@ -20,6 +21,9 @@ module.exports = {
         ]
     },
     plugins: [
-        new UglifyJsPlugin()
+        new UglifyJsPlugin(),
+        new webpack.ProvidePlugin({
+            Promise: 'es6-promise-promise', // works as expected
+        }),
     ]
 };
