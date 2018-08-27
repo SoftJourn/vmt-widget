@@ -63,7 +63,7 @@
        eventId: 123});
     ```
 2. Listen VMT Widget internal methods calling:
-    - when user checkout some tickets(in the __picker__ mode) we need register method for it. 
+    - when user checkout some tickets(in the __picker__ mode) we need to register method for it. 
     Callback function receives *token* and *tickets* parameters.\n
     Example:
     ```js
@@ -72,6 +72,16 @@
         return {success: true, message: `${tickets.length} ticket was checkout successfully!`};
     });
     ```
+    - when user add, edit or delete some ticket type(in the __inventory__ mode) we need to register method for it. 
+      Callback function receives *action* and *data* parameters.\n
+        Example:
+        ```js
+        vmtWidget.method('onTicketTypeChange', function (action, data) {
+                console.log('TICKET TYPE CHANGE: ', action, data);
+                return {success: true, message: 'ticket type  was ' + action + ' successfully!'};
+            });
+        ```
+        *action* could be : add, edit or delete;
     - also, VMT Widget provides __onClose__ hook for catching event when VMT Widget was closed:    
     ```js
     vmtWidget.onClose(() => {
