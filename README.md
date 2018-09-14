@@ -60,6 +60,7 @@
        styles: 'someCssProp: 10px;', // inject custom inline css styles for iframe (optionally)
        seatslimit: 5, //limit of siets
        hideCloseBtn:true, //hide close button
+       timeZone:'Europe/Minsk',//user timezone
        eventId: 123});
     ```
 2. Listen VMT Widget internal methods calling:

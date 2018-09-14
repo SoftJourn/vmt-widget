@@ -28,7 +28,8 @@ export default class {
             mode: options && options.mode,
             styles: options.styles,
             seatslimit: options.seatslimit,
-            hideCloseBtn: options.hideCloseBtn
+            hideCloseBtn: options.hideCloseBtn,
+            timeZone:options.timeZone
         });
 
         // ----------------------------------------------------------------------------------------------
