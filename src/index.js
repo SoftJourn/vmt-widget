@@ -29,6 +29,7 @@ export default class {
             styles: options.styles,
             seatslimit: options.seatslimit,
             hideCloseBtn: options.hideCloseBtn,
+            hideExpandBtn: options.hideExpandBtn,
             timeZone:options.timeZone
         });
 

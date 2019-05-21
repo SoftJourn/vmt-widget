@@ -67,8 +67,8 @@ export default class VMTContainer {
         iframe.focus();
     }
 
-    getIframeUrl({frontPoint, memberId, eventId, venueId, mode, seatslimit, hideCloseBtn, timeZone}) {
-        return `${frontPoint}?member=${memberId}${eventId ? '&event=' + eventId : ''}&venue=${venueId}${mode ? '&mode=' + mode : ''}${seatslimit ? '&seatslimit=' + seatslimit : ''}${hideCloseBtn ? '&hideCloseBtn=' + hideCloseBtn : ''}${timeZone ? '&timeZone=' + timeZone : ''}`;
+    getIframeUrl({frontPoint, memberId, eventId, venueId, mode, seatslimit, hideCloseBtn, hideExpandBtn, timeZone}) {
+        return `${frontPoint}?member=${memberId}${eventId ? '&event=' + eventId : ''}&venue=${venueId}${mode ? '&mode=' + mode : ''}${seatslimit ? '&seatslimit=' + seatslimit : ''}${hideCloseBtn ? '&hideCloseBtn=' + hideCloseBtn : ''}${hideExpandBtn ? '&hideExpandBtn=' + hideExpandBtn : ''}${timeZone ? '&timeZone=' + timeZone : ''}`;
     }
 
     showSpinner() {
