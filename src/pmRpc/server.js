@@ -3,7 +3,7 @@
  */
 let _methods = {};
 
-function handlePostMessage (event) {
+function handlePostMessage(event) {
     let request;
     if (event.originalEvent) event = event.originalEvent;
 
@@ -31,25 +31,28 @@ function handlePostMessage (event) {
         return _error(event.source, -32700, 'Invalid request', request.id);
     }
 
-    let result = _methods[request.method].apply(this, request.params);
-
-    if(isPromise(result)){
-        result.then(answer)
-            .catch(error => {
-                _error(event.source, -32000, error.message || '', request.id);
-            });
-    }else {
-        answer(result);
+    try {
+        let result = _methods[request.method].apply(this, request.params);
+        if (isPromise(result)) {
+            result.then(answer)
+                .catch(error => {
+                    _error(event.source, -32000, error.message || '', request.id);
+                });
+        } else {
+            answer(result);
+        }
+    } catch (error) {
+        _error(event.source, -32000, error.message, request.id);
+        throw error;
     }
 
-    function answer(r){
+    function answer(r) {
         if (!event.source) { // handle cases when the source window not exists anymore:
             return false;
         }
         if (request.id) {
             event.source.postMessage(JSON.stringify({jsonrpc: '2.0', result: r, id: request.id}), '*');
         }
-        console.log('answer: ', {jsonrpc: '2.0', result: r, id: request.id});
     }
 
     function _error(source, code, message, id) {
