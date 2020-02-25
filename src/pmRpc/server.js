@@ -53,6 +53,7 @@ function handlePostMessage(event) {
         if (request.id) {
             event.source.postMessage(JSON.stringify({jsonrpc: '2.0', result: r, id: request.id}), '*');
         }
+        console.log({jsonrpc: '2.0', result: r, id: request.id});
     }
 
     function _error(source, code, message, id) {
