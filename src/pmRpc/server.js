@@ -31,20 +31,19 @@ function handlePostMessage (event) {
         return _error(event.source, -32700, 'Invalid request', request.id);
     }
 
-    try {
-        let result = _methods[request.method].apply(this, request.params);
-        Promise.resolve(result).then(function (result) {
+    let result = _methods[request.method].apply(this, request.params);
+    Promise.resolve(result)
+        .then(function (result) {
             if (!event.source) { // handle cases when the source window not exists anymore:
                 return false;
             }
             if (request.id) {
                 event.source.postMessage(JSON.stringify({jsonrpc: '2.0', result: result, id: request.id}), '*');
             }
+        })
+        .catch(error => {
+            _error(event.source, -32000, error.message || '', request.id);
         });
-    } catch (error) {
-        _error(event.source, -32000, error.message, request.id);
-        throw error;
-    }
 
     function _error(source, code, message, id) {
         let json = JSON.stringify({jsonrpc: '2.0', code: code, error: message, id: id || null});
