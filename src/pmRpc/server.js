@@ -32,22 +32,33 @@ function handlePostMessage (event) {
     }
 
     let result = _methods[request.method].apply(this, request.params);
-    Promise.resolve(result)
-        .then(function (result) {
-            if (!event.source) { // handle cases when the source window not exists anymore:
-                return false;
-            }
-            if (request.id) {
-                event.source.postMessage(JSON.stringify({jsonrpc: '2.0', result: result, id: request.id}), '*');
-            }
-        })
-        .catch(error => {
-            _error(event.source, -32000, error.message || '', request.id);
-        });
+
+    if(isPromise(result)){
+        result.then(answer)
+            .catch(error => {
+                _error(event.source, -32000, error.message || '', request.id);
+            });
+    }else {
+        answer(result);
+    }
+
+    function answer(r){
+        if (!event.source) { // handle cases when the source window not exists anymore:
+            return false;
+        }
+        if (request.id) {
+            event.source.postMessage(JSON.stringify({jsonrpc: '2.0', result: r, id: request.id}), '*');
+        }
+        console.log('answer: ', {jsonrpc: '2.0', result: r, id: request.id});
+    }
 
     function _error(source, code, message, id) {
         let json = JSON.stringify({jsonrpc: '2.0', code: code, error: message, id: id || null});
         source && source.postMessage(json, '*');
+    }
+
+    function isPromise(obj) {
+        return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
     }
 }
 
