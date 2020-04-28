@@ -62,7 +62,8 @@
        hideCloseBtn:true, //hide close button
        hideExpandBtn:true, //hide expand button
        timeZone:'Europe/Minsk',//user timezone
-       eventId: 123});
+       eventId: 123,
+       allowIconsEdit: false}); //allow to edit default icons
     ```
 2. Listen VMT Widget internal methods calling:
     - when user checkout some tickets(in the __picker__ mode) we need to register method for it. 
