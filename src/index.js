@@ -30,7 +30,8 @@ export default class {
             seatslimit: options.seatslimit,
             hideCloseBtn: options.hideCloseBtn,
             hideExpandBtn: options.hideExpandBtn,
-            timeZone:options.timeZone
+            timeZone:options.timeZone,
+            allowIconsEdit:options.allowIconsEdit
         });
 
         // ----------------------------------------------------------------------------------------------
