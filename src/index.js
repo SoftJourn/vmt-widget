@@ -59,6 +59,10 @@ export default class {
             return token;
         });
 
+        pmRpcServer.method('getOptions', () => {
+            return options;
+        });
+
         return true;
     }
 
