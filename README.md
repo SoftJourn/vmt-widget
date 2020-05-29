@@ -10,7 +10,7 @@
       "name": "vmt-widget-example",
       "version": "0.0.1",
       "dependencies": {
-        "vmt-widget": "git@github.com:SoftJourn/vmt-widget.git"
+        "vmt-widget": "https://github.com/SoftJourn/vmt-widget.git"
       }
     }
 
