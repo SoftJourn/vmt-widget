@@ -63,6 +63,10 @@ export default class VMTContainer {
 
         this.showSpinner();
 
+        while (root.firstChild) {
+            root.firstChild.remove();
+        }
+
         root.appendChild(iframe);
         iframe.focus();
     }
