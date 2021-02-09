@@ -63,8 +63,9 @@ export default class VMTContainer {
 
         this.showSpinner();
 
-        while (root.firstChild) {
-            root.firstChild.remove();
+        const existingIframe = root.getElementsByTagName('iframe')[0];
+        if (existingIframe) {
+            root.removeChild(existingIframe);
         }
 
         root.appendChild(iframe);
