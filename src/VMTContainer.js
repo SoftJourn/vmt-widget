@@ -7,6 +7,11 @@ export default class VMTContainer {
         if (!this.isValidParams(options, root)) {
             return;
         }
+        if (root.children && root.children.length > 0) {
+            while (root.firstChild) {
+                root.removeChild(root.lastChild);
+            }
+        }
         this.initIframe({root, ...options});
     }
 
