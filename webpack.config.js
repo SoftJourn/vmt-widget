@@ -1,29 +1,25 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const webpack = require('webpack');
-
 module.exports = {
-    entry: './src/index.js',
     output: {
-        filename: "./dist/bundle.js",
+        filename: 'bundle.js',
         libraryTarget: 'umd',
-        library: 'VMTWidget'
+        library: 'VMTWidget',
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                    presets:[ 'es2015' , 'react', 'stage-2']
-                }
-            }
-        ]
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                    },
+                },
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: 'asset/resource',
+            },
+        ],
     },
-    plugins: [
-        new UglifyJsPlugin(),
-        new webpack.ProvidePlugin({
-            Promise: 'es6-promise-promise', // works as expected
-        }),
-    ]
 };
