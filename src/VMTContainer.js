@@ -65,6 +65,7 @@ export default class VMTContainer {
         let { root } = options;
         this.root = root;
         this.options = options;
+        this.isLoading = 0;
 
         let iframe = document.createElement('iframe');
         iframe.name = constants.IFRAME_NAME;
@@ -106,29 +107,56 @@ export default class VMTContainer {
     }
 
     showSpinner() {
-        let style = document.createElement('style');
-        style.type = 'text/css';
-        style.setAttribute('id', 'vmt-widget-spinner-styles');
-        style.innerHTML = constants.styles.spinner;
-        document.getElementsByTagName('head')[0].appendChild(style);
+        if (this.isLoading === 0) {
+            this.isLoading++;
 
-        let loadingDiv = document.createElement('div');
-        loadingDiv.setAttribute('id', 'spinnerDiv');
+            if (
+                this.options.onLoad &&
+                this.options.onLoad instanceof Function
+            ) {
+                // load external loading fn
+                return this.options.onLoad();
+            }
 
-        loadingDiv.innerHTML = `
+            if (document.getElementById('spinnerDiv')) return;
+
+            let style = document.createElement('style');
+            style.type = 'text/css';
+            style.setAttribute('id', 'vmt-widget-spinner-styles');
+            style.innerHTML = constants.styles.spinner;
+            document.getElementsByTagName('head')[0].appendChild(style);
+
+            let loadingDiv = document.createElement('div');
+            loadingDiv.setAttribute('id', 'spinnerDiv');
+
+            loadingDiv.innerHTML = `
             <img src=${loadingDots} alt="loading" class="vmt-spinner" /> `;
 
-        this.root.appendChild(loadingDiv);
-        loadingDiv.classList.add('vmt-loading-overlay');
+            this.root.appendChild(loadingDiv);
+            loadingDiv.classList.add('vmt-loading-overlay');
+        } else {
+            this.isLoading++;
+        }
     }
 
     hideSpinner() {
-        let style = document.getElementById('vmt-widget-spinner-styles');
-        document.getElementsByTagName('head')[0].removeChild(style);
+        this.isLoading--;
 
-        let iframe = document.getElementById(this.options.containerId);
-        let loading = iframe.getElementsByClassName('vmt-loading-overlay')[0];
+        if (this.isLoading === 0) {
+            if (
+                this.options.onFinish &&
+                this.options.onFinish instanceof Function
+            ) {
+                return this.options.onFinish();
+            }
 
-        this.root.removeChild(loading);
+            const loadingDiv = document.getElementById('spinnerDiv');
+
+            let style = document.getElementById('vmt-widget-spinner-styles');
+            if (style)
+                document.getElementsByTagName('head')[0].removeChild(style);
+
+            if (loadingDiv) this.root.removeChild(loadingDiv);
+        }
     }
 }

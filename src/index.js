@@ -1,20 +1,23 @@
 import VMTContainer from './VMTContainer';
-import {constants} from '../config';
+import { constants } from '../config';
 import PmRpcServer from './pmRpc/server';
-import {iOSversion, isIE} from './helper';
+import { iOSversion, isIE } from './helper';
 
 let pmRpcServer = new PmRpcServer();
 
 export default class {
-
     static launch(options) {
         if (iOSversion()) {
-            alert('Your system is not supported. Please update your iOS version.');
+            alert(
+                'Your system is not supported. Please update your iOS version.'
+            );
             return false;
         }
 
         if (isIE()) {
-            alert('Your browser is not supported. Please use the latest version of Edge, Chrome, Mozilla, or Safari.');
+            alert(
+                'Your browser is not supported. Please use the latest version of Edge, Chrome, Mozilla, or Safari.'
+            );
             return false;
         }
 
@@ -30,8 +33,10 @@ export default class {
             seatslimit: options.seatslimit,
             hideCloseBtn: options.hideCloseBtn,
             hideExpandBtn: options.hideExpandBtn,
-            timeZone:options.timeZone,
-            allowIconsEdit:options.allowIconsEdit
+            timeZone: options.timeZone,
+            allowIconsEdit: options.allowIconsEdit,
+            onLoad: options.onLoad,
+            onFinish: options.onFinish,
         });
 
         // ----------------------------------------------------------------------------------------------
@@ -41,6 +46,14 @@ export default class {
         pmRpcServer.launch();
 
         pmRpcServer.method('vmtReady', () => {
+            vmtContainer.hideSpinner();
+        });
+
+        pmRpcServer.method('appRequestStarted', () => {
+            vmtContainer.showSpinner();
+        });
+
+        pmRpcServer.method('appRequestFinished', () => {
             vmtContainer.hideSpinner();
         });
 
