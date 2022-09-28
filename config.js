@@ -33,9 +33,9 @@ export const constants = {
               align-items: center;
         }
         .vmt-spinner {
-            width: 12.5rem;
+            width: 8.5rem;
         }
     
    `,
     },
-}
+};
