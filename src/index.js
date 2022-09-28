@@ -35,8 +35,8 @@ export default class {
             hideExpandBtn: options.hideExpandBtn,
             timeZone: options.timeZone,
             allowIconsEdit: options.allowIconsEdit,
-            onLoad: options.onLoad,
-            onFinish: options.onFinish,
+            showSpinner: options.showSpinner,
+            hideSpinner: options.hideSpinner,
         });
 
         // ----------------------------------------------------------------------------------------------

@@ -111,11 +111,11 @@ export default class VMTContainer {
             this.isLoading++;
 
             if (
-                this.options.onLoad &&
-                this.options.onLoad instanceof Function
+                this.options.showSpinner &&
+                this.options.showSpinner instanceof Function
             ) {
                 // load external loading fn
-                return this.options.onLoad();
+                return this.options.showSpinner();
             }
 
             if (document.getElementById('spinnerDiv')) return;
@@ -144,10 +144,10 @@ export default class VMTContainer {
 
         if (this.isLoading === 0) {
             if (
-                this.options.onFinish &&
-                this.options.onFinish instanceof Function
+                this.options.hideSpinner &&
+                this.options.hideSpinner instanceof Function
             ) {
-                return this.options.onFinish();
+                return this.options.hideSpinner();
             }
 
             const loadingDiv = document.getElementById('spinnerDiv');
