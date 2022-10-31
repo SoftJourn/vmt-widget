@@ -18,6 +18,13 @@ module.exports = {
                     presets: ['es2015', 'react', 'stage-2'],
                 },
             },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                loader: 'file-loader',
+                options: {
+                    outputPath: './dist',
+                },
+            },
         ],
     },
     plugins: [
