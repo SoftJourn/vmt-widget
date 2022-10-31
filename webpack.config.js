@@ -1,10 +1,13 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
     entry: './src/index.js',
     output: {
-        filename: './dist/bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+        // filename: './dist/bundle.js',
+        filename: 'bundle.js',
         libraryTarget: 'umd',
         library: 'VMTWidget',
     },
@@ -21,9 +24,9 @@ module.exports = {
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 loader: 'file-loader',
-                options: {
-                    outputPath: './dist',
-                },
+                // options: {
+                //     // outputPath: './dist',
+                // },
             },
         ],
     },
