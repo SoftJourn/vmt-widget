@@ -1,5 +1,5 @@
 import { constants } from '../config';
-import loadingDots from './img/loading-animation-gray.gif';
+import { base64Spinner } from './img/base64Spinner.json';
 
 export default class VMTContainer {
     constructor(options) {
@@ -128,9 +128,7 @@ export default class VMTContainer {
 
             let loadingDiv = document.createElement('div');
             loadingDiv.setAttribute('id', 'spinnerDiv');
-
-            loadingDiv.innerHTML = `
-            <img src=${loadingDots} alt="loading" class="vmt-spinner" /> `;
+            loadingDiv.innerHTML = `<img src=${base64Spinner} alt="loading" class="vmt-spinner" /> `;
 
             this.root.appendChild(loadingDiv);
             loadingDiv.classList.add('vmt-loading-overlay');
