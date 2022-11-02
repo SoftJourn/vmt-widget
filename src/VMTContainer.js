@@ -1,7 +1,7 @@
-import {constants} from '../config';
+import { constants } from '../config';
+import { base64Spinner } from './img/base64Spinner.json';
 
 export default class VMTContainer {
-
     constructor(options) {
         let root = document.getElementById(options.containerId);
         if (!this.isValidParams(options, root)) {
@@ -12,7 +12,7 @@ export default class VMTContainer {
                 root.removeChild(root.lastChild);
             }
         }
-        this.initIframe({root, ...options});
+        this.initIframe({ root, ...options });
     }
 
     // ------------------------------------------------------------------------------------------
@@ -26,7 +26,9 @@ export default class VMTContainer {
     }
 
     toggleFullScreen() {
-        let iframe = document.querySelector(`iframe[name=\"${constants.IFRAME_NAME}\"]`);
+        let iframe = document.querySelector(
+            `iframe[name=\"${constants.IFRAME_NAME}\"]`
+        );
         if (this.initialStyles) {
             iframe.style.cssText = this.initialStyles;
             this.initialStyles = null;
@@ -36,7 +38,10 @@ export default class VMTContainer {
         } else {
             this.initialStyles = iframe.style.cssText;
             iframe.style.cssText = constants.styles.fullScreen;
-            iframe.height = (window.orientation === 90 || window.orientation === -90) ? "100%" : window.innerHeight;
+            iframe.height =
+                window.orientation === 90 || window.orientation === -90
+                    ? '100%'
+                    : window.innerHeight;
         }
     }
 
@@ -46,9 +51,10 @@ export default class VMTContainer {
 
     isValidParams(options, root) {
         if (!options.memberId || !options.frontPoint || root === null) {
-            let errorMessage = root === null ?
-                constants.messages.noContainer(options.containerId) :
-                constants.messages.missedParams;
+            let errorMessage =
+                root === null
+                    ? constants.messages.noContainer(options.containerId)
+                    : constants.messages.missedParams;
             console.error(errorMessage);
             return false;
         }
@@ -56,14 +62,14 @@ export default class VMTContainer {
     }
 
     initIframe(options) {
-        let {root} = options;
+        let { root } = options;
         this.root = root;
         this.options = options;
+        this.isLoading = 0;
 
         let iframe = document.createElement('iframe');
         iframe.name = constants.IFRAME_NAME;
         iframe.style.cssText = options.styles || constants.styles.iframe;
-        iframe.frameBorder = 0;
         iframe.src = this.getIframeUrl(options);
 
         this.showSpinner();
@@ -77,41 +83,78 @@ export default class VMTContainer {
         iframe.focus();
     }
 
-    getIframeUrl({frontPoint, memberId, eventId, venueId, mode, seatslimit, hideCloseBtn, hideExpandBtn, timeZone, allowIconsEdit}) {
-        return `${frontPoint}?member=${memberId}${eventId ? '&event=' + eventId : ''}&venue=${venueId}${mode ? '&mode=' + mode : ''}${seatslimit ? '&seatslimit=' + seatslimit : ''}${hideCloseBtn ? '&hideCloseBtn=' + hideCloseBtn : ''}${hideExpandBtn ? '&hideExpandBtn=' + hideExpandBtn : ''}${timeZone ? '&timeZone=' + timeZone : ''}${allowIconsEdit ? '&allowIconsEdit=' + allowIconsEdit : ''}`;
+    getIframeUrl({
+        frontPoint,
+        memberId,
+        eventId,
+        venueId,
+        mode,
+        seatslimit,
+        hideCloseBtn,
+        hideExpandBtn,
+        timeZone,
+        allowIconsEdit,
+    }) {
+        return `${frontPoint}?member=${memberId}${
+            eventId ? '&event=' + eventId : ''
+        }&venue=${venueId}${mode ? '&mode=' + mode : ''}${
+            seatslimit ? '&seatslimit=' + seatslimit : ''
+        }${hideCloseBtn ? '&hideCloseBtn=' + hideCloseBtn : ''}${
+            hideExpandBtn ? '&hideExpandBtn=' + hideExpandBtn : ''
+        }${timeZone ? '&timeZone=' + timeZone : ''}${
+            allowIconsEdit ? '&allowIconsEdit=' + allowIconsEdit : ''
+        }`;
     }
 
     showSpinner() {
-        let style = document.createElement('style');
-        style.type = 'text/css';
-        style.setAttribute('id', 'vmt-widget-spinner-styles');
-        style.innerHTML = constants.styles.spinner;
-        document.getElementsByTagName('head')[0].appendChild(style);
+        if (this.isLoading === 0) {
+            this.isLoading++;
 
-        let spinnerDiv = document.createElement('div');
-        let bounceball = document.createElement('div');
-        let picture = document.createElement('div');
-        let loadingDiv = document.createElement('div');
-        spinnerDiv.appendChild(bounceball);
-        spinnerDiv.appendChild(picture);
-        this.root.appendChild(spinnerDiv);
-        this.root.appendChild(loadingDiv);
-        loadingDiv.classList.add('vmt-loading');
-        spinnerDiv.classList.add('vmt-spinner');
-        bounceball.classList.add('bounceball');
-        picture.classList.add('picture');
+            if (
+                this.options.showSpinner &&
+                this.options.showSpinner instanceof Function
+            ) {
+                // load external loading fn
+                return this.options.showSpinner();
+            }
+
+            if (document.getElementById('spinnerDiv')) return;
+
+            let style = document.createElement('style');
+            style.type = 'text/css';
+            style.setAttribute('id', 'vmt-widget-spinner-styles');
+            style.innerHTML = constants.styles.spinner;
+            document.getElementsByTagName('head')[0].appendChild(style);
+
+            let loadingDiv = document.createElement('div');
+            loadingDiv.setAttribute('id', 'spinnerDiv');
+            loadingDiv.innerHTML = `<img src=${base64Spinner} alt="loading" class="vmt-spinner" /> `;
+
+            this.root.appendChild(loadingDiv);
+            loadingDiv.classList.add('vmt-loading-overlay');
+        } else {
+            this.isLoading++;
+        }
     }
 
     hideSpinner() {
-        let style = document.getElementById('vmt-widget-spinner-styles');
-        document.getElementsByTagName('head')[0].removeChild(style);
+        this.isLoading--;
 
-        let iframe = document.getElementById(this.options.containerId);
-        let spinner = iframe.getElementsByClassName("vmt-spinner")[0];
-        let loading = iframe.getElementsByClassName("vmt-loading")[0];
+        if (this.isLoading === 0) {
+            if (
+                this.options.hideSpinner &&
+                this.options.hideSpinner instanceof Function
+            ) {
+                return this.options.hideSpinner();
+            }
 
-        this.root.removeChild(loading);
-        this.root.removeChild(spinner);
+            const loadingDiv = document.getElementById('spinnerDiv');
+
+            let style = document.getElementById('vmt-widget-spinner-styles');
+            if (style)
+                document.getElementsByTagName('head')[0].removeChild(style);
+
+            if (loadingDiv) this.root.removeChild(loadingDiv);
+        }
     }
-
 }

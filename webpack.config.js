@@ -4,9 +4,9 @@ const webpack = require('webpack');
 module.exports = {
     entry: './src/index.js',
     output: {
-        filename: "./dist/bundle.js",
+        filename: './dist/bundle.js',
         libraryTarget: 'umd',
-        library: 'VMTWidget'
+        library: 'VMTWidget',
     },
     module: {
         loaders: [
@@ -15,15 +15,15 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
-                    presets:[ 'es2015' , 'react', 'stage-2']
-                }
-            }
-        ]
+                    presets: ['es2015', 'react', 'stage-2'],
+                },
+            },
+        ],
     },
     plugins: [
         new UglifyJsPlugin(),
         new webpack.ProvidePlugin({
             Promise: 'es6-promise-promise', // works as expected
         }),
-    ]
+    ],
 };
