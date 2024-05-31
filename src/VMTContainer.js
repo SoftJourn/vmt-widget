@@ -71,6 +71,7 @@ export default class VMTContainer {
         iframe.name = constants.IFRAME_NAME;
         iframe.style.cssText = options.styles || constants.styles.iframe;
         iframe.src = this.getIframeUrl(options);
+        iframe.setAttribute('allow', 'clipboard-read; clipboard-write');
 
         this.showSpinner();
 
